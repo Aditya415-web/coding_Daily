@@ -42,10 +42,12 @@
   <link rel="stylesheet" href="belajar-koding.css">
   <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+  
   <style>
   </style>
 </head>
-
+<!-- Elemen notifikasi sukses -->
+<div id="notif-sukses" class="notif-sukses">Yeay! Data berhasil dicatat! 🎉</div>
 <body>
 
   <!--
@@ -406,6 +408,26 @@
     /* =============================================
        HELPER: Format total menit → "X jam Y mnt"
     ============================================= */
+    function tampilkanNotif() {
+        const notif = document.getElementById('notif-sukses');
+        if (!notif) return;
+        
+        // Hapus class muncul jika sudah ada, lalu paksa reflow
+        notif.classList.remove('muncul');
+        void notif.offsetWidth; // reflow
+        
+        // Tambah class muncul
+        notif.classList.add('muncul');
+        
+        // Hilangkan setelah 2.5 detik
+        setTimeout(() => {
+            notif.classList.remove('muncul');
+        }, 2500);
+    }
+
+    /* =============================================
+       HELPER: Format total menit → "X jam Y mnt"
+    ============================================= */
     function formatMenit(total) {
       if (total === 0) return '0 mnt';
       const j = Math.floor(total / 60);
@@ -540,7 +562,7 @@ function ikonMateriMini(nama) {
     ============================================= */
     const LEVEL_STREAK = [
       {
-        min    : 365,
+        min    : 100,
         kunci  : 'legend',
         label  : '🌈 LEGEND',
         badgeClass : 'badge-legend',
@@ -549,7 +571,7 @@ function ikonMateriMini(nama) {
         pesanAktif : (n) => `🌈 ${n} HARI! KAMU ADALAH LEGEND!`,
       },
       {
-        min    : 180,
+        min    : 50,
         kunci  : 'epic',
         label  : '💜 EPIC',
         badgeClass : 'badge-epic',
@@ -558,7 +580,7 @@ function ikonMateriMini(nama) {
         pesanAktif : (n) => `💜 ${n} hari! Status: EPIC!`,
       },
       {
-        min    : 90,
+        min    : 30,
         kunci  : 'gold',
         label  : '🥇 GOLD',
         badgeClass : 'badge-gold',
@@ -567,7 +589,7 @@ function ikonMateriMini(nama) {
         pesanAktif : (n) => `🥇 ${n} hari! Sudah Level Gold!`,
       },
       {
-        min    : 30,
+        min    : 14,
         kunci  : 'silver',
         label  : '🥈 SILVER',
         badgeClass : 'badge-silver',
@@ -1031,6 +1053,9 @@ function ikonMateriMini(nama) {
 
       toggleForm();
       renderSemua();
+      
+      // Tampilkan notifikasi sukses
+      tampilkanNotif();
     }
 
 
